@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ const providers = [
   '@adonisjs/websocket/providers/WsProvider',
   'adonis-acl/providers/AclProvider',
   'adonis-bumblebee/providers/BumblebeeProvider',
-]
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ const aceProviders = [
   '@adonisjs/lucid/providers/MigrationsProvider',
   'adonis-acl/providers/CommandsProvider',
   'adonis-bumblebee/providers/CommandsProvider',
-]
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +52,8 @@ const aceProviders = [
 */
 const aliases = {
   Role: 'Adonis/Acl/Role',
-  Permission: 'Adonis/Acl/Permission'
-}
+  Permission: 'Adonis/Acl/Permission',
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +63,6 @@ const aliases = {
 | Here you store ace commands for your package
 |
 */
-const commands = []
+const commands = [];
 
-module.exports = { providers, aceProviders, aliases, commands }
+module.exports = { providers, aceProviders, aliases, commands };

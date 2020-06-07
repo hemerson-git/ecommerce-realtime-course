@@ -30,10 +30,11 @@
     "@adonisjs/websocket": "^1.0.12",
     "adonis-acl": "^1.1.1",
     "adonis-bumblebee": "^2.2.0",
-    "eslint": "^7.2.0",
     "mysql": "^2.18.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.2.0"
+  },
   "autoload": {
     "App": "./app"
   }
