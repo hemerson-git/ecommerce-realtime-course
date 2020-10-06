@@ -21,15 +21,15 @@ class User extends Model {
     });
   }
 
-  static get hidden() {
-    return ['password'];
-  }
-  
   static get traits() {
     return [
       '@provider:Adonis/Acl/HasRole',
       '@provider:Adonis/Acl/HasPermission',
     ];
+  }
+  
+  static get hidden() {
+    return ['password'];
   }
 
   /**
