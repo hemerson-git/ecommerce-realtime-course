@@ -25,3 +25,9 @@ Route.get('/', () => {
  */
 
 require('./auth');
+
+/**
+ * Import Admin routes
+ */
+
+require('./admin');
