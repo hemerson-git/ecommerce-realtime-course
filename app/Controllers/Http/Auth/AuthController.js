@@ -28,11 +28,23 @@ class AuthController {
   }
 
   async login({ request, response, auth}) {
-    
+    const { email, password } = request.all();
+
+    let data = await auth.withRefreshToken().attempt(email, password);
+
+    return response.send({ data });
   }
 
   async refresh({ request, response, auth }) {
+    let refresh_token = request.input('refresh_token');
+    
+    if(!refresh_token) {
+      refresh_token = request.header('refresh_token');
+    }
 
+    const user = await auth.newRefreshToken().generateForRefreshToken(refresh_token);
+
+    return response.send({ data : user });
   }
 
   async logout({ request, response, auth }) {
