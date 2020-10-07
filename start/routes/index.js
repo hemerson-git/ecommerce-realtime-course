@@ -31,3 +31,9 @@ require('./auth');
  */
 
 require('./admin');
+
+/**
+ * Import Client routes
+ */
+
+require('./client');
