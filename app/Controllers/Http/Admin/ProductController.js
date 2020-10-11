@@ -43,6 +43,15 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    try {
+      const { name, description, price } = request.all();
+      const product = await Product.create({ name, description, price });
+  
+      return response.status(201).send(product);
+    } catch(error) {
+      return response.status(400).send({ message: 'Não foi possível criar o produto. Tente novamente!' });
+    }
+
   }
 
   /**
@@ -54,7 +63,9 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params: {id}, request, response, view }) {
+    const product = await Product.findOrFail(id);
+    return response.send(product);
   }
 
   /**
@@ -65,7 +76,12 @@ class ProductController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params: {id}, request, response }) {
+    const product = await Product.findOrFail(id);
+    const { name, description, price } = request.all();
+    await product.merge({ name, description, price });
+    await product.save();
+    return response.send(product);
   }
 
   /**
@@ -76,7 +92,11 @@ class ProductController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params: {id}, response }) {
+    const product = await Product.findOrFail(id);
+    await product.delete();
+
+    return response.status(204).send({});
   }
 }
 
