@@ -16,7 +16,11 @@ class Pagination {
       const page = parseInt(ctx.request.input('page'));
       const limit = parseInt(ctx.request.input('limit'));
 
-      const perpage = ctx.request.input('perpage');
+      ctx.pagination = {
+        page, limit,
+      };
+
+      const perpage = parseInt(ctx.request.input('perpage'));
 
       if(perpage) {
         ctx.pagination.limit = perpage;

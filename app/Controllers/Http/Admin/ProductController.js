@@ -1,5 +1,7 @@
 'use strict';
 
+const Pagination = require('../../../Middleware/Pagination');
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -19,11 +21,16 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-    const page = request.input('page');
-    const limit = request.input('limit');
-    const products = await Product.query().paginate(page, limit);
+  async index ({ request, response, pagination }) {
+    const name = request.input('name');
+    const query = Product.query();
 
+    if (name) {
+      console.log(typeof(name));
+      query.where('name', 'LIKE', `%${name}%`);
+    }
+    
+    const products = await query.paginate(pagination.page, pagination.limit);
     return response.send(products);
   }
 
