@@ -59,7 +59,9 @@ class CategoryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params: { id }, response }) {
+    const category = await Category.findOrFail(id);
+    return response.send(category);
   }
 
   /**
@@ -70,7 +72,12 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params: {id}, request, response }) {
+    const category = await Category.findOrFail(id);
+    const {title, description, image_id} = request.all();
+    await category.merge({ title, description, image_id });
+    await category.save();
+    return response.send(category);
   }
 
   /**
@@ -81,7 +88,10 @@ class CategoryController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params : {id}, response }) {
+    const category = await Category.findOrFail(id);
+    await category.delete();
+    return response.status(204).send({});
   }
 }
 
