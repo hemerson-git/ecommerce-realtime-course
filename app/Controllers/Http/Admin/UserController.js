@@ -20,7 +20,7 @@ class UserController {
    * @param {View} ctx.view
    */
   async index ({ request, response, pagination }) {
-    const { name } = request.input('name');
+    const name = request.input('name');
     const query = User.query();
 
     if (name) {
@@ -29,7 +29,7 @@ class UserController {
       query.orWhere('email', 'LIKE', `%${name}%`);
     }
 
-    const user = await query().paginate(pagination.page, pagination.limit);
+    const user = await query.paginate(pagination.page, pagination.limit || 10);
     return response.send(user);
   }
 
