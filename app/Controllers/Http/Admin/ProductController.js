@@ -24,12 +24,9 @@ class ProductController {
   async index ({ request, response, pagination }) {
     const name = request.input('name');
     const query = Product.query();
-
     if (name) {
-      console.log(typeof(name));
       query.where('name', 'LIKE', `%${name}%`);
     }
-    
     const products = await query.paginate(pagination.page, pagination.limit);
     return response.send(products);
   }
@@ -44,7 +41,7 @@ class ProductController {
    */
   async store ({ request, response }) {
     try {
-      const { name, description, price } = request.all();
+      const { name, description, price, image_id } = request.all();
       const product = await Product.create({ name, description, price });
   
       return response.status(201).send(product);
@@ -77,11 +74,15 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async update ({ params: {id}, request, response }) {
-    const product = await Product.findOrFail(id);
-    const { name, description, price } = request.all();
-    await product.merge({ name, description, price });
-    await product.save();
-    return response.send(product);
+    try {
+      const product = await Product.findOrFail(id);
+      const { name, description, price } = request.all();
+      await product.merge({ name, description, price });
+      await product.save();
+      return response.send(product);
+    } catch(error) {
+      return response.status(400).send({ message: 'Não foi possível atualizar o produto nesse momento' });
+    }
   }
 
   /**
