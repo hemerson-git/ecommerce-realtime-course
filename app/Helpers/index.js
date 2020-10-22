@@ -18,12 +18,12 @@ const str_random = async (length = 40) => {
     let size = length - len;
     let bytes = await crypto.randomBytes(size);
     let buffer = new Buffer.from(bytes);
-    str += buffer.toString('base64').replace('/[a-zA-Z0-0]/g', '').substr(0, size);
+    str += buffer.toString('base64').replace(/[^a-zA-Z0-9]/g, '').substr(0, size);
   }
 
   return str;
 };
 
 module.exports = {
-  str_random;
+  str_random,
 };
