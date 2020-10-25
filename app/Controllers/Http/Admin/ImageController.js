@@ -6,7 +6,8 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Image = use('App/Models/Image');
-const Helpers, { manage_single_upload, manage_multiple_upload } = use('App/Helpers');
+const { manage_single_upload, manage_multiple_upload } = use('App/Helpers');
+const Helpers = use('Helpers');
 const fs = use('fs');
 
 /**
@@ -116,11 +117,12 @@ class ImageController {
    */
   async update ({ params: { id }, request, response }) {
     const image = await Image.findOrFail(id);
+    const newTitle = request.only(['original_name']);
 
     try {
-      image.merge(request.only['original_image']);
+      image.merge({ original_name: newTitle });
       await image.save();
-      return response.status(201).send(image);
+      return response.status(200).send(image);
     } catch(error) {
       return response.status(400).send({ message: 'Não foi possível enviar a imagem no momento!' });
     }
@@ -137,19 +139,19 @@ class ImageController {
   async destroy ({ params: {id}, request, response }) {
     const image = await Image.findOrFail(id);
     try {
-      let filepath = Helpers.publicPath(`uploads/${image.path}`);
+      let filepath = Helpers.publicPath(`upload/${image.path}`);
 
-      await fs.unlink(filepath, err => {
+      await fs.unlink(filepath, async err => {
         if(!err) {
-          await image.delete()
+          await image.delete();
         }
       });
 
-      return response.status(204).send()
+      return response.status(204).send();
     } catch(error) {
       return response.status(400).send({
-        message: 'Não foi possível deletar a imagem no momento!'
-      })
+        message: 'Não foi possível deletar a imagem no momento!',
+      });
     }
   }
 }
