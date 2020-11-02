@@ -30,16 +30,18 @@ Route.group(() => {
    * Image resource routes
    */
 
-  Route.resource('images', 'ImageController').apiOnly();
-
-  /**
-   * Image resource routes
-   */
-
+  Route.post('orders/:id/discount', 'OrderController.applyDiscount');
+  Route.delete('orders:id/discount', 'OrderController.removeDiscount');
   Route.resource('orders', 'OrderController').apiOnly();
 
   /**
    * User resource routes
+   */
+
+  Route.resource('images', 'ImageController').apiOnly();
+
+  /**
+   * Image resource routes
    */
 
   Route.resource('users', 'UserController').apiOnly();
