@@ -1,6 +1,6 @@
 'use strict';
 
-const Pagination = require('../../../Middleware/Pagination');
+// const Pagination = require('../../../Middleware/Pagination');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -63,7 +63,7 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params: {id}, request, response, transform }) {
+  async show ({ params: {id}, response, transform }) {
     let product = await Product.findOrFail(id);
     product = await transform.item(product, Transformer); 
     return response.send(product);

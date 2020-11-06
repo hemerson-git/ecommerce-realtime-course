@@ -169,7 +169,7 @@ class OrderController {
         info.success = false;
       }
 
-      return response.send({ order, info });
+      return response.send({ order, info, discount });
 
     } catch (error) {
       return response.status(400).send({ message: 'Erro ao aplicar o cupom' });
