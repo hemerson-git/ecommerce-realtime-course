@@ -1,9 +1,9 @@
 'use strict';
 
-const UserTransformer = require('App/Transformers/Admin/UserTransformer');
-const OrderItemTransformer = require('App/Transformers/Admin/OrderItemTransformer');
-const CouponTransformer = require('App/Transformers/Admin/CouponTransformer');
-const DiscountTransformer = require('App/Transformers/Admin/DiscountTransformer');
+const UserTransformer = use('App/Transformers/Admin/UserTransformer');
+const OrderItemTransformer = use('App/Transformers/Admin/OrderItemTransformer');
+const CouponTransformer = use('App/Transformers/Admin/CouponTransformer');
+const DiscountTransformer = use('App/Transformers/Admin/DiscountTransformer');
 
 const BumblebeeTransformer = use('Bumblebee/Transformer');
 
@@ -36,19 +36,19 @@ class OrderTransformer extends BumblebeeTransformer {
   }
 
   includeUser(order) {
-    return this.item(order.getRelated('user', UserTransformer));
+    return this.item(order.getRelated('user'), UserTransformer);
   }
 
   includeItems(order) {
-    return this.item(order.getRelated('items', OrderItemTransformer));
+    return this.collection(order.getRelated('items'), OrderItemTransformer);
   }
 
   includeCoupons(order) {
-    return this.item(order.getRelated('coupons', CouponTransformer));
+    return this.collection(order.getRelated('coupons'), CouponTransformer);
   }
 
   includeDiscounts(order) {
-    return this.item(order.getRelated('discounts', DiscountTransformer));
+    return this.collection(order.getRelated('discounts'), DiscountTransformer);
   }
 }
 

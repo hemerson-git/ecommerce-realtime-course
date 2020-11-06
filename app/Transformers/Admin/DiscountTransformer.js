@@ -1,6 +1,6 @@
 'use strict';
 
-const CouponTransformer = require('App/Transformers/Admin/CouponTransformer');
+const CouponTransformer = use('App/Transformers/Admin/CouponTransformer');
 
 const BumblebeeTransformer = use('Bumblebee/Transformer');
 

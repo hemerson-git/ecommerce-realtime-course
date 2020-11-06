@@ -6,7 +6,7 @@
 
 const Coupon = use('App/Models/Coupon'); 
 const Database = use('Database');
-const Service = use('App/Controllers/Services/Coupon/CouponService');
+const Service = use('App/Services/Coupon/CouponService');
 const Transformer = use('App/Transformers/Admin/CouponTransformer');
 
 /**
@@ -20,17 +20,16 @@ class CouponController {
    * @param {object} ctx
    * @param {Response} ctx.response
    * @param {Object} ctx.pagination
-   * @param {View} ctx.view
    */
   async index ({ request, response, pagination, transform }) {
-    const code = request.only(['code']);
+    const code = request.input('code');
     const query = Coupon.query();
 
     if (code) {
       query.where('code', 'LIKE', `%${code}%`);
     }
 
-    let coupons = await query.paginate(pagination.page, pagination.limit);
+    let coupons = await query.paginate(pagination.page, pagination.limit || 10);
     coupons = await transform.paginate(coupons, Transformer);
     return response.send(coupons);
   }

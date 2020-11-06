@@ -19,7 +19,7 @@ class Order extends Model {
     return this.belongsToMany('App/Models/Coupon');
   }
 
-  discount() {
+  discounts() {
     return this.hasMany('App/Models/Discount');
   }
 

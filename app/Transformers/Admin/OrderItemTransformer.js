@@ -1,7 +1,7 @@
 'use strict';
 
 const BumblebeeTransformer = use('Bumblebee/Transformer');
-const ProductTransformer = use('App/Models/Admin/ProductTransformer');
+const ProductTransformer = use('App/Transformers/Admin/ProductTransformer');
 
 /**
  * OrderItemTransformer class

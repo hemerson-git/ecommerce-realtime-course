@@ -63,7 +63,8 @@ class OrderController {
         await service.syncItems(items);
       }
 
-      await trx.commmit();
+      await trx.commit();
+      order = await Order.find(order.id);
       order = await transform.item(order, Transformer);
       return response.status(201).send(order);
     } catch (error) {
