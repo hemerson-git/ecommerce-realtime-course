@@ -27,7 +27,9 @@ Route.group(() => {
    * Coupon resource routes
    */
 
-  Route.resource('coupons', 'CouponController').apiOnly();
+  Route.resource('coupons', 'CouponController').apiOnly().validator(new Map([
+    [['coupons.store'], ['Admin/StoreCoupon']],
+  ]));
 
   /**
    * Image resource routes

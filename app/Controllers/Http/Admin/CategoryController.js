@@ -21,14 +21,15 @@ class CategoryController {
    * @param {TransformerWith} ctx.transform
    * @param {Object} ctx.pagination
    */
-  async index ({ request, response, transform, pagination }) {
+  async index ({ request, response, pagination, transform }) {
     const title = request.input('title');
     const query = Category.query();
+    
     if (title) {
       query.where('title', 'LIKE', `%${title}%`);
     }
     
-    let categories = await query.paginate( pagination.page, pagination.limit);
+    let categories = await query.paginate(pagination.page, pagination.limit || 10);
     categories = await transform.paginate(categories, Transformer);
 
     return response.send(categories);

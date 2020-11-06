@@ -11,7 +11,7 @@ const ImageTransformer = use('App/Transformers/Admin/ImageTransformer');
  */
 class ProductTransformer extends BumblebeeTransformer {
   defaultInclude() {
-    return ['image']
+    return ['image'];
   }
   /**
    * This method is used to transform the data.
@@ -20,14 +20,14 @@ class ProductTransformer extends BumblebeeTransformer {
     return {
       // add your transformation object here
       id: model.id,
-      name: model.name,,
+      name: model.name,
       description: model.description,
-      price: model.price
+      price: model.price,
     };
   }
 
   includeImage(model) {
-    return this.item(model.getRelated('image'), ImageTransformer)
+    return this.item(model.getRelated('image'), ImageTransformer);
   }
 }
 
