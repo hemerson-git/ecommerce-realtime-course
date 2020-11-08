@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -62,5 +62,5 @@ module.exports = {
   | been elapsed, the client will consider server as dead.
   |
   */
-  clientAttempts: 3
-}
+  clientAttempts: 3,
+};
