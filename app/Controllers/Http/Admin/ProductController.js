@@ -80,8 +80,8 @@ class ProductController {
   async update ({ params: {id}, request, response, transform }) {
     let product = await Product.findOrFail(id);
     try {
-      const { name, description, price } = request.all();
-      await product.merge({ name, description, price });
+      const { name, description, price, image_id } = request.all();
+      await product.merge({ name, description, price, image_id });
       await product.save();
       product = await transform.item(product, Transformer); 
       return response.send(product);

@@ -39,7 +39,7 @@ class OrderController {
     } 
 
     let orders = await query.paginate(pagination.page, pagination.limit);
-    orders = await transform.paginate(orders, Transformer);
+    orders = await transform.include('user,items,discounts').paginate(orders, Transformer);
     return response.send(orders);
   }
 

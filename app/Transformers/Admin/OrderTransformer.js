@@ -14,7 +14,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  * @constructor
  */
 class OrderTransformer extends BumblebeeTransformer {
-  availableInclude() {
+  static get availableInclude() {
     return ['user', 'coupons', 'discounts', 'items' ];
   }
   

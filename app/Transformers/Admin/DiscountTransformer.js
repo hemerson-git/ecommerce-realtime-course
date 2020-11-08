@@ -11,7 +11,7 @@ const BumblebeeTransformer = use('Bumblebee/Transformer');
  * @constructor
  */
 class DiscountTransformer extends BumblebeeTransformer {
-  defaultInclude() {
+  static defaultInclude() {
     return ['coupon'];
   }
   /**

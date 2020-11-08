@@ -10,7 +10,7 @@ const ImageTransformer = use('App/Transformers/Admin/ImageTransformer');
  */
 class CategoryTransformer extends BumblebeeTransformer {
 
-  defaultInclude() {
+  static get defaultInclude() {
     return ['image'];
   }
   
