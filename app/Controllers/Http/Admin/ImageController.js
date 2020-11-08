@@ -127,8 +127,8 @@ class ImageController {
 
     try {
       image.merge({ original_name: newTitle });
-      image = await transform.item(image, Transformer);
       await image.save();
+      image = await transform.item(image, Transformer);
       return response.status(200).send(image);
     } catch(error) {
       return response.status(400).send({ message: 'Não foi possível enviar a imagem no momento!' });
