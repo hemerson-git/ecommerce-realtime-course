@@ -4,6 +4,7 @@ const Database = use('Database');
 
 const User = use('App/Models/User');
 const Role = use('Role');
+const WS = use('Ws');
 
 class AuthController {
   async register({ request, response }) {
@@ -17,6 +18,13 @@ class AuthController {
 
       await trx.commit();
 
+      // Envia uma notificação pra todos que estiverem no canal
+      const topic = WS.getChannel('notifications').topic('notifications');
+
+      if(topic) {
+        topic.broadcast('new:user');
+      }
+      
       return response.status(201).send({ data: user });
     } catch (error) {
       await trx.rollback();

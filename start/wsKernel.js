@@ -11,7 +11,6 @@ const Ws = use('Ws');
 |
 */
 const globalMiddleware = [
-  'Adonis/Middleware/Session',
   'Adonis/Middleware/AuthInit',
 ];
 

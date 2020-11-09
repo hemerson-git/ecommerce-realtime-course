@@ -13,8 +13,8 @@ class Pagination {
     // call next to advance the request
 
     if(ctx.request.method() === 'GET') {
-      const page = parseInt(ctx.request.input('page'));
-      const limit = parseInt(ctx.request.input('limit'));
+      const page = ctx.request.input('page') ? parseInt(ctx.request.input('page')) : 1;
+      const limit = ctx.request.input('limit') ? parseInt(ctx.request.input('limit')) : 10;
 
       ctx.pagination = {
         page, limit,

@@ -4,6 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Order = use('App/Models/Orders');
+const Transformer = use('App/Transformers/Admin/OrderTransformer');
+
 /**
  * Resourceful controller for interacting with orders
  */
@@ -17,7 +20,18 @@ class OrderController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ request, response, transform, pagination }) {
+    const query = Order.query();
+    // order number
+    const number = request.input('number');
+    if (number) {
+      query.where('id', 'LIKE', `${number}`);
+    }
+
+    let orders = await query.orderBy('id', 'DESC').paginate(pagination.page, pagination.limit);
+    orders = transform.paginate(orders, Transformer);
+
+    return response.send(orders);
   }
 
   /**

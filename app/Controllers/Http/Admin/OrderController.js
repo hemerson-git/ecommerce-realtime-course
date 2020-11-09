@@ -38,7 +38,7 @@ class OrderController {
       query.where('status', status);
     } 
 
-    let orders = await query.paginate(pagination.page, pagination.limit);
+    let orders = await query.orderBy('id', 'DESC').paginate(pagination.page, pagination.limit);
     orders = await transform.include('user,items,discounts').paginate(orders, Transformer);
     return response.send(orders);
   }

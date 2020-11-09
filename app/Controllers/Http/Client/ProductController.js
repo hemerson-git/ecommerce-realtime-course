@@ -4,6 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Product = use('App/Models/Product');
+const Transformer = use('App/Transformers/Admin/ProductTransformer');
+
 /**
  * Resourceful controller for interacting with products
  */
@@ -17,18 +20,18 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
+  async index ({ request, response, pagination, transform }) {
+    const title = request.input('title');
+    const query = Product.query();  
 
-  /**
-   * Create/save a new product.
-   * POST products
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+    if (title) {
+      query.where('name', 'LIKE', `%${title}%`);
+    }
+
+    let products = await query.paginate(pagination.page, pagination.limit || 10);
+    products = await transform.paginate(products, Transformer);
+
+    return response.send(products);
   }
 
   /**
@@ -40,29 +43,11 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params: { id }, transform, response}) {
+    let product = await Product.findOrFail(id);
+    product = await transform.item(product, Transformer);
 
-  /**
-   * Update product details.
-   * PUT or PATCH products/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a product with id.
-   * DELETE products/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    return response.send(product);
   }
 }
 
