@@ -21,7 +21,7 @@ class OrderService {
     let currentItems = await this.model
       .items()
       .whereIn('id', items.map( item => item.id))
-      .fatch(this.trx);
+      .fetch(this.trx);
 
     //deleta os items aue o user não quer mais
 

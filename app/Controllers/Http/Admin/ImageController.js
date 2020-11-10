@@ -146,7 +146,7 @@ class ImageController {
   async destroy ({ params: {id}, request, response }) {
     const image = await Image.findOrFail(id);
     try {
-      let filepath = Helpers.publicPath(`upload/${image.path}`);
+      let filepath = Helpers.publicPath(`uploads/${image.path}`);
 
       await fs.unlinkSync(filepath);
       await image.delete();

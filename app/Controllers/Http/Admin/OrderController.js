@@ -104,7 +104,7 @@ class OrderController {
 
     try {
       const { user_id, items, status } = request.all();
-      order.merge({user_id, status});
+      order.merge({ user_id, status });
       const service = new Service(order, trx);
       await service.updateItems(items);
       await order.save(trx);
@@ -128,7 +128,7 @@ class OrderController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params: { id }, request, response }) {
+  async destroy ({ params: { id }, response }) {
     const order = await Order.findOrFail(id);
     const trx = await Database.beginTransaction();
 
@@ -183,7 +183,7 @@ class OrderController {
     }
   }
 
-  async removeDiscount({ params, request, response}) {
+  async removeDiscount({ request, response}) {
     const { discount_id } = request.all();
     const discount = await Discount.findOrFail(discount_id);
     await discount.delete();
